@@ -19,23 +19,7 @@ import de.blinkt.openvpn.VpnProfile;
 
 public class ProxyDetection {
 	static SocketAddress detectProxy(VpnProfile vp) {
-		// Construct a new url with https as protocol
-		try {
-			URL url = new URL(String.format("https://%s:%s",vp.mServerName,vp.mServerPort));
-			Proxy proxy = getFirstProxy(url);
-
-			if(proxy==null)
-				return null;
-			SocketAddress addr = proxy.address();
-			if (addr instanceof InetSocketAddress) {
-				return addr; 
-			}
-			
-		} catch (MalformedURLException e) {
-			VpnStatus.logError(R.string.getproxy_error, e.getLocalizedMessage());
-		} catch (URISyntaxException e) {
-			VpnStatus.logError(R.string.getproxy_error, e.getLocalizedMessage());
-		}
+		// Always return null to avoid picking up system proxy
 		return null;
 	}
 
